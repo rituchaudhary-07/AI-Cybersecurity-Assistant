@@ -1,0 +1,30 @@
+# Environment & Secrets
+.env
+*.env
+!.env.example
+
+# Python / Virtual Environment
+venv/
+.venv/
+env/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.coverage
+*.egg-info/
+
+# Node / Frontend
+node_modules/
+dist/
+build/
+.npm
+.vite/
+
+# System & Editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.log

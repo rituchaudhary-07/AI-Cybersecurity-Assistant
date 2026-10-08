@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * { box-sizing: border-box; }
+
+  html { background: #f6f8fb; }
+
+  body {
+    margin: 0;
+    min-width: 320px;
+    background: #f6f8fb;
+    color: #172033;
+    font-family: 'Manrope', ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  button, input { font: inherit; }
+  button:focus-visible, input:focus-visible { outline: 3px solid rgba(14, 165, 164, .32); outline-offset: 2px; }
+  code, pre, .font-mono { font-family: 'DM Mono', ui-monospace, SFMono-Regular, monospace; }
+}
+
+@layer components {
+  .saas-card {
+    @apply rounded-2xl border border-slate-200/80 bg-white shadow-sm transition duration-200;
+  }
+  .saas-card:hover { @apply border-slate-300 shadow-md; }
+
+  .saas-btn-primary {
+    @apply inline-flex items-center justify-center rounded-xl border border-transparent bg-teal-600 font-semibold text-white shadow-sm transition duration-200 hover:bg-teal-700 hover:shadow-md active:scale-[.98] disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .saas-btn-dark {
+    @apply inline-flex items-center justify-center rounded-xl border border-slate-800 bg-slate-900 font-semibold text-white shadow-sm transition duration-200 hover:bg-slate-800 active:scale-[.98];
+  }
+  .saas-input {
+    @apply rounded-xl border border-slate-200 bg-white transition duration-200 placeholder:text-slate-400 hover:border-slate-300 focus:border-teal-500 focus:outline-none focus:ring-4 focus:ring-teal-500/10;
+  }
+  .auth-shell {
+    background: radial-gradient(circle at 18% 16%, rgba(45, 212, 191, .18), transparent 26%), radial-gradient(circle at 85% 78%, rgba(59, 130, 246, .13), transparent 25%), #09111f;
+  }
+  .auth-grid {
+    background-image: linear-gradient(rgba(148, 163, 184, .06) 1px, transparent 1px), linear-gradient(90deg, rgba(148, 163, 184, .06) 1px, transparent 1px);
+    background-size: 36px 36px;
+  }
+  .surface-card { @apply bg-slate-950/70 backdrop-blur-xl; }
+  .glass-input {
+    @apply border border-slate-700/90 bg-slate-900/70 transition placeholder:text-slate-500 hover:border-slate-600 focus:border-teal-400 focus:outline-none focus:ring-4 focus:ring-teal-400/10;
+  }
+}
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border: 2px solid #f6f8fb; border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
