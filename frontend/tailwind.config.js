@@ -4,34 +4,57 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        saas: {
-          bg: '#FAFAFA',          // Minimal light background
-          card: '#FFFFFF',        // Clean white card surface
-          text: '#0F172A',        // Slate-900 primary text
-          muted: '#64748B',       // Slate-500 secondary text
-          border: '#E2E8F0',      // Slate-200 subtle 1px border
-          'border-hover': '#CBD5E1',
-          accent: '#E11D48',      // Rose-600 signal red accent
-          'accent-hover': '#BE123C',
-          'accent-light': '#FFF1F2',
+        cyber: {
+          base: 'var(--bg-base)',
+          surface: 'var(--bg-surface)',
+          elevated: 'var(--bg-elevated)',
+          border: 'var(--border-glow)',
+          accent: 'var(--accent)',
+          'accent-strong': 'var(--accent-strong)',
+          blue: 'var(--blue)',
+          'text-primary': 'var(--text-primary)',
+          'text-secondary': 'var(--text-secondary)',
+          success: 'var(--success)',
+          warning: 'var(--warning)',
+          danger: 'var(--danger)',
         }
       },
-      borderRadius: {
-        'sm': '6px',
-        'md': '8px',
-        'lg': '12px',
-        'xl': '16px',
-      },
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
+        heading: ['Montserrat', 'Poppins', 'sans-serif'],
+        poppins: ['Poppins', 'sans-serif'],
+        montserrat: ['Montserrat', 'sans-serif'],
+        sans: ['Inter', 'system-ui', 'sans-serif'],
         mono: ['JetBrains Mono', 'monospace'],
       },
       boxShadow: {
-        'sm': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
-        'md': '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)',
+        'cyan-glow-sm': '0 0 12px rgba(34, 211, 238, 0.25)',
+        'cyan-glow-md': '0 0 25px rgba(34, 211, 238, 0.35), 0 4px 12px rgba(0, 0, 0, 0.6)',
+        'cyan-glow-lg': '0 0 45px rgba(0, 229, 255, 0.45), 0 8px 24px rgba(0, 0, 0, 0.8)',
+        'blue-glow': '0 0 25px rgba(37, 99, 235, 0.35)',
+      },
+      animation: {
+        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'radar-sweep': 'radarSweep 4s linear infinite',
+        'circuit-pulse': 'circuitPulse 3s ease-in-out infinite',
+        'ring-spin': 'ringSpin 20s linear infinite',
+      },
+      keyframes: {
+        radarSweep: {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' },
+        },
+        ringSpin: {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' },
+        },
+        circuitPulse: {
+          '0%, 100%': { opacity: '0.3', strokeDashoffset: '0' },
+          '50%': { opacity: '1', strokeDashoffset: '-20' },
+        }
       }
     },
   },

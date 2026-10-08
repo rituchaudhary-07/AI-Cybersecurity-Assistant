@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import api from '../services/api';
-import { Globe, ShieldAlert, CheckCircle2, AlertTriangle, ArrowRight, RefreshCw, Search, ShieldCheck } from 'lucide-react';
+import { Globe, ShieldAlert, CheckCircle2, AlertTriangle, ArrowRight, RefreshCw, Search, ShieldCheck, Zap } from 'lucide-react';
 
 export default function UrlScanner() {
   const [url, setUrl] = useState('');
@@ -31,19 +31,19 @@ export default function UrlScanner() {
   ];
 
   return (
-    <div className="max-w-6xl mx-auto space-y-8">
+    <div className="max-w-6xl mx-auto space-y-8 pb-8">
       {/* Header Banner */}
-      <div className="bg-white border border-slate-200 rounded-xl p-6 sm:p-8 shadow-sm">
+      <div className="cyber-glass-card p-6 sm:p-8">
         <div className="flex items-center space-x-3 mb-2">
-          <div className="p-2.5 bg-teal-50 text-teal-600 rounded-lg">
+          <div className="p-2.5 rounded-xl bg-cyan-500/15 border border-cyan-500/30 text-cyan-400 shadow-[0_0_12px_rgba(0,240,200,0.25)]">
             <Globe className="w-6 h-6" />
           </div>
           <div>
-            <h2 className="text-xl font-bold text-slate-900">URL Phishing & Threat Detector</h2>
-            <p className="text-xs text-slate-500 font-mono">Random Forest ML & Lexical Feature Extraction Engine</p>
+            <h2 className="text-xl font-heading font-bold text-white">URL Phishing & Threat Detector</h2>
+            <p className="text-xs text-slate-400 font-mono">Random Forest ML & Lexical Feature Extraction Engine</p>
           </div>
         </div>
-        <p className="text-xs text-slate-600 mt-2 max-w-2xl">
+        <p className="text-xs text-slate-300 mt-2 max-w-2xl leading-relaxed">
           Analyzes 16 lexical characteristics including URL length, domain age, IP presence, subdomain depth, HTTPS status, and Shannon entropy to detect spoofed phishing links.
         </p>
 
@@ -56,22 +56,22 @@ export default function UrlScanner() {
               value={url}
               onChange={(e) => setUrl(e.target.value)}
               placeholder="Paste URL here (e.g. https://example.com/login)..."
-              className="w-full pl-10 pr-4 py-2.5 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:outline-none focus:border-teal-600 focus:bg-white transition-colors"
+              className="w-full pl-10 pr-4 py-3 text-xs sm:text-sm saas-input text-slate-100 placeholder:text-slate-500 focus:border-cyan-400 font-mono"
             />
           </div>
           <button
             type="submit"
             disabled={loading}
-            className="saas-btn-primary px-6 py-2.5 text-xs font-semibold flex items-center justify-center space-x-2 shrink-0"
+            className="cyber-btn-primary px-6 py-3 text-xs font-heading font-bold uppercase tracking-wider flex items-center justify-center space-x-2 shrink-0 disabled:opacity-50"
           >
             {loading ? (
               <>
                 <RefreshCw className="w-4 h-4 animate-spin" />
-                <span>Scanning ML...</span>
+                <span>Running ML Scan...</span>
               </>
             ) : (
               <>
-                <span>Run Lexical Scan</span>
+                <span>Scan URL</span>
                 <ArrowRight className="w-4 h-4" />
               </>
             )}
@@ -79,13 +79,13 @@ export default function UrlScanner() {
         </form>
 
         {/* Quick Sample Links */}
-        <div className="mt-3 flex items-center space-x-2 text-[11px] text-slate-500 font-mono">
-          <span>Quick Test:</span>
+        <div className="mt-3.5 flex flex-wrap items-center gap-2 text-[11px] text-slate-400 font-mono">
+          <span className="text-cyan-400 font-semibold">QUICK TEST:</span>
           {sampleUrls.map((s, idx) => (
             <button
               key={idx}
               onClick={() => setUrl(s)}
-              className="hover:text-teal-600 underline truncate max-w-[200px]"
+              className="hover:text-cyan-300 underline truncate max-w-[240px] transition-colors"
             >
               {s}
             </button>
@@ -94,8 +94,8 @@ export default function UrlScanner() {
       </div>
 
       {error && (
-        <div className="p-4 bg-red-50 border border-red-200 text-red-700 text-xs rounded-xl flex items-center space-x-2">
-          <AlertTriangle className="w-4 h-4 shrink-0" />
+        <div className="p-4 bg-rose-950/30 border border-rose-500/40 text-rose-300 text-xs font-mono rounded-xl flex items-center space-x-2.5 shadow-[0_0_15px_rgba(239,68,68,0.15)]">
+          <AlertTriangle className="w-4 h-4 text-rose-400 shrink-0" />
           <span>{error}</span>
         </div>
       )}
@@ -104,30 +104,30 @@ export default function UrlScanner() {
       {result && (
         <div className="space-y-6">
           {/* Main Risk Overview */}
-          <div className={`p-6 rounded-xl border ${
+          <div className={`p-6 rounded-2xl border ${
             result.is_phishing 
-              ? 'bg-rose-50/70 border-rose-200 text-rose-950' 
-              : 'bg-emerald-50/70 border-emerald-200 text-emerald-950'
+              ? 'bg-rose-950/40 border-rose-500/40 text-rose-200 shadow-[0_0_25px_rgba(239,68,68,0.2)]' 
+              : 'bg-emerald-950/40 border-emerald-500/40 text-emerald-200 shadow-[0_0_25px_rgba(16,185,129,0.2)]'
           }`}>
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div className="flex items-center space-x-4">
                 {result.is_phishing ? (
-                  <ShieldAlert className="w-10 h-10 text-rose-600 shrink-0" />
+                  <ShieldAlert className="w-10 h-10 text-rose-400 shrink-0" />
                 ) : (
-                  <ShieldCheck className="w-10 h-10 text-emerald-600 shrink-0" />
+                  <ShieldCheck className="w-10 h-10 text-emerald-400 shrink-0" />
                 )}
                 <div>
                   <div className="flex items-center space-x-2">
-                    <span className="text-xs font-mono font-bold uppercase tracking-wider">Target Domain:</span>
-                    <span className="text-sm font-mono font-semibold">{result.domain}</span>
+                    <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-300">Target Domain:</span>
+                    <span className="text-sm font-mono font-semibold text-white">{result.domain}</span>
                   </div>
-                  <h3 className="text-lg font-bold mt-0.5">{result.risk_level}</h3>
+                  <h3 className="text-lg font-heading font-bold mt-1 text-white">{result.risk_level}</h3>
                 </div>
               </div>
 
-              <div className="text-right bg-white/80 backdrop-blur-xs px-5 py-3 rounded-lg border border-slate-200 shadow-xs">
-                <span className="text-[10px] font-mono uppercase text-slate-500 font-semibold block">Phishing Risk Score</span>
-                <span className={`text-2xl font-bold font-mono ${result.risk_score > 50 ? 'text-rose-600' : 'text-emerald-600'}`}>
+              <div className="text-right bg-slate-900/90 px-5 py-3 rounded-xl border border-[var(--cyber-border)] shadow-md">
+                <span className="text-[10px] font-mono uppercase text-slate-400 font-semibold block">Phishing Risk Score</span>
+                <span className={`text-2xl font-bold font-mono ${result.risk_score > 50 ? 'text-rose-400' : 'text-emerald-400'}`}>
                   {result.risk_score} / 100
                 </span>
               </div>
@@ -135,21 +135,22 @@ export default function UrlScanner() {
           </div>
 
           {/* Lexical Features Grid */}
-          <div className="bg-white border border-slate-200 rounded-xl p-6 space-y-4 shadow-sm">
-            <h3 className="text-xs font-mono font-semibold uppercase tracking-wider text-slate-500">
-              Lexical Feature Extraction & Telemetry Breakdown
+          <div className="cyber-glass-card p-6 space-y-4">
+            <h3 className="text-xs font-mono font-semibold uppercase tracking-wider text-cyan-300 flex items-center space-x-2">
+              <Zap className="w-3.5 h-3.5 text-cyan-400" />
+              <span>Lexical Feature Extraction & Telemetry Breakdown</span>
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {result.features.map((feat, idx) => (
-                <div key={idx} className="p-3 bg-slate-50 border border-slate-200 rounded-lg flex items-center justify-between">
+                <div key={idx} className="p-3.5 bg-slate-950/70 border border-[var(--cyber-border)] rounded-xl flex items-center justify-between">
                   <div className="space-y-0.5">
-                    <p className="text-xs font-semibold text-slate-800">{feat.name}</p>
-                    <p className="text-[11px] font-mono text-slate-500">{feat.value}</p>
+                    <p className="text-xs font-semibold text-slate-200">{feat.name}</p>
+                    <p className="text-[11px] font-mono text-slate-400">{feat.value}</p>
                   </div>
                   <span className={`text-[10px] font-mono px-2 py-0.5 rounded font-semibold border ${
-                    feat.risk === 'High' ? 'bg-rose-100 text-rose-700 border-rose-200' :
-                    feat.risk === 'Medium' ? 'bg-amber-100 text-amber-700 border-amber-200' :
-                    'bg-emerald-100 text-emerald-700 border-emerald-200'
+                    feat.risk === 'High' ? 'bg-rose-500/15 text-rose-300 border-rose-500/40' :
+                    feat.risk === 'Medium' ? 'bg-amber-500/15 text-amber-300 border-amber-500/40' :
+                    'bg-emerald-500/15 text-emerald-300 border-emerald-500/40'
                   }`}>
                     {feat.risk} Risk
                   </span>
@@ -159,14 +160,14 @@ export default function UrlScanner() {
           </div>
 
           {/* Recommendations Card */}
-          <div className="bg-white border border-slate-200 rounded-xl p-6 space-y-3 shadow-sm">
-            <h3 className="text-xs font-mono font-semibold uppercase tracking-wider text-slate-500">
+          <div className="cyber-glass-card p-6 space-y-3">
+            <h3 className="text-xs font-mono font-semibold uppercase tracking-wider text-cyan-300">
               AI Security Advisory & Action Plan
             </h3>
-            <ul className="space-y-2 text-xs text-slate-700">
+            <ul className="space-y-2.5 text-xs text-slate-300">
               {result.recommendations.map((rec, idx) => (
-                <li key={idx} className="flex items-start space-x-2">
-                  <CheckCircle2 className="w-4 h-4 text-teal-600 shrink-0 mt-0.5" />
+                <li key={idx} className="flex items-start space-x-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
                   <span>{rec}</span>
                 </li>
               ))}

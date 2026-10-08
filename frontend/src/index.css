@@ -1,57 +1,302 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Montserrat:wght@500;600;700;800;900&family=Poppins:wght@500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  * { box-sizing: border-box; }
+/* ==========================================================================
+   THEME CSS VARIABLES (REFERENCE CYBER COMMAND / SOC SPECIFICATION)
+   ========================================================================== */
+:root {
+  /* Dark / Night Mode (Default) */
+  --bg-base: #040B1A;
+  --bg-surface: #0A1428;
+  --bg-elevated: #0F1D38;
+  --border-glow: rgba(34, 211, 238, 0.25);
+  --border-glow-strong: rgba(0, 229, 255, 0.55);
+  --accent: #22D3EE;
+  --accent-strong: #00E5FF;
+  --blue: #2563EB;
+  --text-primary: #FFFFFF;
+  --text-secondary: #94A3B8;
+  --success: #10B981;
+  --warning: #F59E0B;
+  --danger: #EF4444;
+  --card-glass: rgba(10, 20, 40, 0.75);
+  
+  /* Typography */
+  --font-heading: 'Montserrat', 'Poppins', sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
 
-  html { background: #f6f8fb; }
+/* Light Mode Toggle */
+[data-theme="light"] {
+  --bg-base: #EAF2FB;
+  --bg-surface: #FFFFFF;
+  --bg-elevated: #F1F6FD;
+  --border-glow: rgba(8, 145, 178, 0.25);
+  --border-glow-strong: rgba(8, 145, 178, 0.55);
+  --accent: #0891B2;
+  --accent-strong: #0284C7;
+  --blue: #2563EB;
+  --text-primary: #0B1B3A;
+  --text-secondary: #475569;
+  --success: #10B981;
+  --warning: #D97706;
+  --danger: #DC2626;
+  --card-glass: rgba(255, 255, 255, 0.92);
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    background-color: var(--bg-base);
+    color: var(--text-primary);
+    scroll-behavior: smooth;
+  }
 
   body {
     margin: 0;
     min-width: 320px;
-    background: #f6f8fb;
-    color: #172033;
-    font-family: 'Manrope', ui-sans-serif, system-ui, sans-serif;
+    background-color: var(--bg-base);
+    color: var(--text-primary);
+    font-family: var(--font-body);
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
-  button, input { font: inherit; }
-  button:focus-visible, input:focus-visible { outline: 3px solid rgba(14, 165, 164, .32); outline-offset: 2px; }
-  code, pre, .font-mono { font-family: 'DM Mono', ui-monospace, SFMono-Regular, monospace; }
-}
+  h1, h2, h3, .font-heading {
+    font-family: var(--font-heading);
+    letter-spacing: -0.01em;
+  }
 
-@layer components {
-  .saas-card {
-    @apply rounded-2xl border border-slate-200/80 bg-white shadow-sm transition duration-200;
+  code, pre, .font-mono {
+    font-family: var(--font-mono);
   }
-  .saas-card:hover { @apply border-slate-300 shadow-md; }
 
-  .saas-btn-primary {
-    @apply inline-flex items-center justify-center rounded-xl border border-transparent bg-teal-600 font-semibold text-white shadow-sm transition duration-200 hover:bg-teal-700 hover:shadow-md active:scale-[.98] disabled:cursor-not-allowed disabled:opacity-50;
-  }
-  .saas-btn-dark {
-    @apply inline-flex items-center justify-center rounded-xl border border-slate-800 bg-slate-900 font-semibold text-white shadow-sm transition duration-200 hover:bg-slate-800 active:scale-[.98];
-  }
-  .saas-input {
-    @apply rounded-xl border border-slate-200 bg-white transition duration-200 placeholder:text-slate-400 hover:border-slate-300 focus:border-teal-500 focus:outline-none focus:ring-4 focus:ring-teal-500/10;
-  }
-  .auth-shell {
-    background: radial-gradient(circle at 18% 16%, rgba(45, 212, 191, .18), transparent 26%), radial-gradient(circle at 85% 78%, rgba(59, 130, 246, .13), transparent 25%), #09111f;
-  }
-  .auth-grid {
-    background-image: linear-gradient(rgba(148, 163, 184, .06) 1px, transparent 1px), linear-gradient(90deg, rgba(148, 163, 184, .06) 1px, transparent 1px);
-    background-size: 36px 36px;
-  }
-  .surface-card { @apply bg-slate-950/70 backdrop-blur-xl; }
-  .glass-input {
-    @apply border border-slate-700/90 bg-slate-900/70 transition placeholder:text-slate-500 hover:border-slate-600 focus:border-teal-400 focus:outline-none focus:ring-4 focus:ring-teal-400/10;
+  button, input, textarea, select {
+    font: inherit;
   }
 }
 
-::-webkit-scrollbar { width: 8px; height: 8px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #cbd5e1; border: 2px solid #f6f8fb; border-radius: 99px; }
-::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+/* ==========================================================================
+   CIRCUIT-BOARD TRACE & BACKGROUND EFFECTS
+   ========================================================================== */
+.circuit-bg {
+  background-image: 
+    radial-gradient(circle at 75% 30%, rgba(34, 211, 238, 0.15) 0%, transparent 45%),
+    radial-gradient(circle at 20% 70%, rgba(37, 99, 235, 0.12) 0%, transparent 40%),
+    linear-gradient(rgba(34, 211, 238, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 211, 238, 0.03) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+}
+
+[data-theme="light"] .circuit-bg {
+  background-image: 
+    radial-gradient(circle at 75% 30%, rgba(8, 145, 178, 0.10) 0%, transparent 45%),
+    radial-gradient(circle at 20% 70%, rgba(37, 99, 235, 0.08) 0%, transparent 40%),
+    linear-gradient(rgba(8, 145, 178, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(8, 145, 178, 0.05) 1px, transparent 1px);
+}
+
+/* ==========================================================================
+   GLASSMORPHISM & CYBER CARDS
+   ========================================================================== */
+.cyber-glass-card {
+  background: var(--card-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-glow);
+  border-radius: 16px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cyber-glass-card:hover {
+  border-color: var(--border-glow-strong);
+  box-shadow: 0 0 30px rgba(34, 211, 238, 0.25), 0 8px 24px rgba(0, 0, 0, 0.5);
+  transform: translateY(-2px);
+}
+
+[data-theme="light"] .cyber-glass-card:hover {
+  box-shadow: 0 0 25px rgba(8, 145, 178, 0.2), 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* Backward compatibility classes */
+.saas-card {
+  @apply cyber-glass-card;
+}
+
+.surface-card {
+  @apply cyber-glass-card;
+}
+
+.auth-shell {
+  background-color: var(--bg-base);
+  background-image: 
+    radial-gradient(circle at 30% 30%, rgba(34, 211, 238, 0.15) 0%, transparent 45%),
+    radial-gradient(circle at 70% 70%, rgba(37, 99, 235, 0.12) 0%, transparent 45%);
+}
+
+.auth-grid {
+  @apply circuit-bg;
+}
+
+/* ==========================================================================
+   PILL BUTTONS (MATCHING REFERENCE "READ MORE" STYLE)
+   ========================================================================== */
+/* Primary Pill Button: White fill with glowing cyan outline & dark text */
+.cyber-pill-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #FFFFFF;
+  color: #040B1A;
+  font-weight: 700;
+  font-family: var(--font-heading);
+  border-radius: 9999px;
+  border: 2px solid var(--accent);
+  box-shadow: 0 0 20px rgba(34, 211, 238, 0.45);
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.cyber-pill-primary:hover {
+  background: #E0F7FA;
+  box-shadow: 0 0 32px rgba(0, 229, 255, 0.7);
+  transform: translateY(-1px) scale(1.02);
+  color: #000000;
+}
+
+/* Secondary Pill Button: Glowing translucent cyan border */
+.cyber-pill-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10, 20, 40, 0.6);
+  backdrop-filter: blur(8px);
+  border: 1.5px solid var(--border-glow);
+  color: var(--text-primary);
+  font-weight: 600;
+  font-family: var(--font-heading);
+  border-radius: 9999px;
+  transition: all 0.25s ease;
+}
+
+.cyber-pill-secondary:hover {
+  background: rgba(34, 211, 238, 0.12);
+  border-color: var(--accent);
+  color: #FFFFFF;
+  box-shadow: 0 0 20px rgba(34, 211, 238, 0.3);
+}
+
+.saas-btn-primary {
+  @apply cyber-pill-primary;
+}
+
+.saas-btn-dark {
+  @apply cyber-pill-secondary;
+}
+
+/* Inputs */
+.saas-input, .glass-input {
+  background: rgba(10, 20, 40, 0.7);
+  border: 1px solid var(--border-glow);
+  color: var(--text-primary);
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.saas-input:focus, .glass-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 15px rgba(34, 211, 238, 0.35);
+}
+
+[data-theme="light"] .saas-input, [data-theme="light"] .glass-input {
+  background: #FFFFFF;
+  border-color: rgba(8, 145, 178, 0.3);
+  color: #0B1B3A;
+}
+
+/* ==========================================================================
+   FOCAL POINT PADLOCK & NEON RING ANIMATIONS
+   ========================================================================== */
+.padlock-ring-outer {
+  stroke-dasharray: 8 6;
+  animation: ringSpin 35s linear infinite;
+  transform-origin: center;
+}
+
+.padlock-ring-inner {
+  stroke-dasharray: 4 4;
+  animation: ringSpinReverse 25s linear infinite;
+  transform-origin: center;
+}
+
+@keyframes ringSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes ringSpinReverse {
+  0% { transform: rotate(360deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.circuit-pulse-line {
+  stroke-dasharray: 10 15;
+  animation: circuitTrace 6s linear infinite;
+}
+
+@keyframes circuitTrace {
+  0% { stroke-dashoffset: 100; }
+  100% { stroke-dashoffset: 0; }
+}
+
+.radar-sweep-beam {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, transparent 0deg, transparent 270deg, rgba(34, 211, 238, 0.3) 360deg);
+  animation: radarSweep 3.5s linear infinite;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-base);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(34, 211, 238, 0.35);
+  border-radius: 99px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+  box-shadow: 0 0 10px rgba(34, 211, 238, 0.6);
+}
+
+/* Presentation Mode */
+.presentation-mode-active {
+  font-size: 1.06rem;
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
