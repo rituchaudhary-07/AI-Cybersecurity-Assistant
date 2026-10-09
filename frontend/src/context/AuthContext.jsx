@@ -9,23 +9,37 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let active = true;
+
+    // Safety timeout: If server does not respond within 3 seconds, drop loading
+    const timer = setTimeout(() => {
+      if (active) setLoading(false);
+    }, 3000);
+
     const fetchCurrentUser = async () => {
       if (!token) {
-        setLoading(false);
+        if (active) setLoading(false);
+        clearTimeout(timer);
         return;
       }
       try {
         const response = await api.get('/auth/me');
-        setUser(response.data);
+        if (active) setUser(response.data);
       } catch (err) {
-        console.error('Failed to load user profile:', err);
-        logout();
+        console.warn('Failed to load user profile or backend offline:', err);
+        if (active) logout();
       } finally {
-        setLoading(false);
+        clearTimeout(timer);
+        if (active) setLoading(false);
       }
     };
 
     fetchCurrentUser();
+
+    return () => {
+      active = false;
+      clearTimeout(timer);
+    };
   }, [token]);
 
   const login = async (email, password) => {

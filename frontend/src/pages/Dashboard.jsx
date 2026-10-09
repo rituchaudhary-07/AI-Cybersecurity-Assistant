@@ -9,6 +9,8 @@ import UrlScanner from '../components/UrlScanner';
 import LogAnalyzer from '../components/LogAnalyzer';
 import VulnerabilityScanner from '../components/VulnerabilityScanner';
 import ReportsView from '../components/ReportsView';
+import QrScanner from '../components/QrScanner';
+import SpamDetector from '../components/SpamDetector';
 
 import { 
   KeyRound, 
@@ -28,7 +30,9 @@ import {
   Radio, 
   Zap, 
   Shield, 
-  Lock
+  Lock,
+  QrCode,
+  MailWarning
 } from 'lucide-react';
 
 export default function Dashboard() {
@@ -342,7 +346,7 @@ export default function Dashboard() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                   <StatCard
                     title="Active Modules"
-                    value="6 / 6"
+                    value="8 / 8"
                     subtext="All Security Engines Online"
                     icon={ShieldCheck}
                     sparklineData={[5, 8, 12, 15, 18, 22, 25]}
@@ -460,6 +464,28 @@ export default function Dashboard() {
                     lastUsed="Standby"
                     onLaunch={() => setActiveTab('reports')}
                   />
+
+                  <ModuleCard
+                    title="QR Code Safety Checker"
+                    description="Decodes QR code images safely without opening remote links. Reuses lexical URL scanning or inspects raw payloads in sandbox isolation."
+                    icon={QrCode}
+                    status="ready"
+                    badgeText="Active"
+                    metricLabel="Air-Gapped Decoder"
+                    lastUsed="Standby"
+                    onLaunch={() => setActiveTab('qr')}
+                  />
+
+                  <ModuleCard
+                    title="Spam & Scam Message Detector"
+                    description="Audits SMS, email, and WhatsApp messages for phishing phrases, fake prizes, artificial urgency, OTP requests, and wire demands."
+                    icon={MailWarning}
+                    status="ready"
+                    badgeText="Active"
+                    metricLabel="Heuristic Threat ML"
+                    lastUsed="Standby"
+                    onLaunch={() => setActiveTab('spam')}
+                  />
                 </div>
               </div>
 
@@ -472,6 +498,8 @@ export default function Dashboard() {
           {activeTab === 'log' && <LogAnalyzer />}
           {activeTab === 'vulnerability' && <VulnerabilityScanner />}
           {activeTab === 'reports' && <ReportsView />}
+          {activeTab === 'qr' && <QrScanner />}
+          {activeTab === 'spam' && <SpamDetector />}
         </main>
       </div>
     </div>

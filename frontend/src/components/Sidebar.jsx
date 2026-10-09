@@ -10,7 +10,9 @@ import {
   X,
   Activity,
   ShieldCheck,
-  Radio
+  Radio,
+  QrCode,
+  MailWarning
 } from 'lucide-react';
 
 export default function Sidebar({ activeTab, setActiveTab, mobileMenuOpen, setMobileMenuOpen }) {
@@ -19,6 +21,8 @@ export default function Sidebar({ activeTab, setActiveTab, mobileMenuOpen, setMo
     { id: 'password', label: 'Password Strength ML', icon: KeyRound, tag: 'ML' },
     { id: 'chatbot', label: 'AI Security Assistant', icon: MessageSquare, tag: 'RAG' },
     { id: 'phishing', label: 'URL Phishing Scanner', icon: Globe, tag: 'NET' },
+    { id: 'qr', label: 'QR Code Safety Checker', icon: QrCode, tag: 'QR' },
+    { id: 'spam', label: 'Spam & Scam Detector', icon: MailWarning, tag: 'SPAM' },
     { id: 'log', label: 'Log File Analyzer', icon: FileText, tag: 'SIEM' },
     { id: 'vulnerability', label: 'Vulnerability Scanner', icon: ShieldAlert, tag: 'AUDIT' },
     { id: 'reports', label: 'Reports & AI Advice', icon: Sparkles, tag: 'INTEL' },

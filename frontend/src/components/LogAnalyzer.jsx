@@ -1,14 +1,31 @@
 import React, { useState } from 'react';
 import api from '../services/api';
-import { FileText, Upload, RefreshCw, AlertTriangle, CheckCircle2, ShieldAlert, Terminal, Info, Zap } from 'lucide-react';
+import { 
+  FileText, 
+  Upload, 
+  RefreshCw, 
+  AlertTriangle, 
+  CheckCircle2, 
+  ShieldAlert, 
+  Terminal, 
+  Info, 
+  Zap, 
+  Cpu,
+  Trash2,
+  FileCheck
+} from 'lucide-react';
 
 export default function LogAnalyzer() {
   const [logText, setLogText] = useState('');
+  const [uploadedFileName, setUploadedFileName] = useState('');
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
 
-  const sampleLog = `203.0.113.45 - - [06/Oct/2026:10:15:20 +0000] "POST /login HTTP/1.1" 401 230
+  const sampleDatasets = [
+    {
+      label: 'Full Attack Scenario (Brute Force + SQLi + Probing)',
+      content: `203.0.113.45 - - [06/Oct/2026:10:15:20 +0000] "POST /login HTTP/1.1" 401 230
 203.0.113.45 - - [06/Oct/2026:10:15:21 +0000] "POST /login HTTP/1.1" 401 230
 203.0.113.45 - - [06/Oct/2026:10:15:22 +0000] "POST /login HTTP/1.1" 401 230
 203.0.113.45 - - [06/Oct/2026:10:15:23 +0000] "POST /login HTTP/1.1" 401 230
@@ -20,7 +37,22 @@ export default function LogAnalyzer() {
 192.168.1.50 - - [06/Oct/2026:10:17:11 +0000] "GET /api/users HTTP/1.1" 500 450
 192.168.1.50 - - [06/Oct/2026:10:17:12 +0000] "GET /api/users HTTP/1.1" 500 450
 Oct  6 10:18:00 server sshd[10421]: Failed password for invalid user admin from 198.51.100.99 port 54321 ssh2
-Oct  6 10:18:02 server sshd[10421]: Failed password for invalid user root from 198.51.100.99 port 54322 ssh2`;
+Oct  6 10:18:02 server sshd[10421]: Failed password for invalid user root from 198.51.100.99 port 54322 ssh2`
+    },
+    {
+      label: 'Linux SSH Auth Failures',
+      content: `Oct  6 10:18:00 server sshd[10421]: Failed password for invalid user admin from 198.51.100.99 port 54321 ssh2
+Oct  6 10:18:02 server sshd[10421]: Failed password for invalid user root from 198.51.100.99 port 54322 ssh2
+Oct  6 10:18:05 server sshd[10421]: Failed password for invalid user oracle from 198.51.100.99 port 54323 ssh2
+Oct  6 10:18:08 server sshd[10421]: Failed password for invalid user test from 198.51.100.99 port 54324 ssh2`
+    },
+    {
+      label: 'Clean Web Traffic',
+      content: `192.168.1.50 - - [06/Oct/2026:10:15:00 +0000] "GET /index.html HTTP/1.1" 200 4520
+192.168.1.50 - - [06/Oct/2026:10:15:05 +0000] "GET /about.html HTTP/1.1" 200 1200
+192.168.1.50 - - [06/Oct/2026:10:15:10 +0000] "GET /contact.html HTTP/1.1" 200 890`
+    }
+  ];
 
   const handleAnalyze = async (e) => {
     e?.preventDefault();
@@ -44,11 +76,22 @@ Oct  6 10:18:02 server sshd[10421]: Failed password for invalid user root from 1
     const file = e.target.files[0];
     if (!file) return;
 
+    setUploadedFileName(file.name);
+    setError(null);
+
     const reader = new FileReader();
     reader.onload = (evt) => {
-      setLogText(evt.target.result);
+      setLogText(evt.target.result || '');
     };
     reader.readAsText(file);
+    e.target.value = ''; // Reset input so same file can be re-uploaded
+  };
+
+  const clearLogs = () => {
+    setLogText('');
+    setUploadedFileName('');
+    setResult(null);
+    setError(null);
   };
 
   const getThreatRatingColor = (rating) => {
@@ -71,11 +114,11 @@ Oct  6 10:18:02 server sshd[10421]: Failed password for invalid user root from 1
           </div>
           <div>
             <h2 className="text-xl font-heading font-bold text-white">Log SIEM Anomaly Inspector</h2>
-            <p className="text-xs text-slate-400 font-mono">Apache, Nginx & Linux Syslog Anomaly Parser</p>
+            <p className="text-xs text-slate-400 font-mono">Apache, Nginx, Linux Syslog & Isolation Forest ML Engine</p>
           </div>
         </div>
         <p className="text-xs text-slate-300 mt-2 max-w-2xl leading-relaxed">
-          Analyzes raw access log lines and authentication logs for brute-force login attempts, SQL injection indicators, sensitive endpoint probing, and HTTP 5xx error spikes.
+          Analyzes raw access log lines and authentication logs for brute-force login attempts, SQL injection indicators, sensitive endpoint probing, and HTTP 5xx error spikes with unsupervised Isolation Forest ML outlier analysis.
         </p>
 
         {/* Input Form */}
@@ -86,13 +129,6 @@ Oct  6 10:18:02 server sshd[10421]: Failed password for invalid user root from 1
               <span>Paste Log Lines or Ingest Log File</span>
             </label>
             <div className="flex items-center space-x-3">
-              <button
-                type="button"
-                onClick={() => setLogText(sampleLog)}
-                className="text-[11px] font-mono text-cyan-400 hover:text-cyan-300 hover:underline font-semibold"
-              >
-                Load Sample Malicious Log Dataset
-              </button>
               <label className="cursor-pointer text-[11px] font-mono border border-[var(--cyber-border)] px-3 py-1.5 rounded-lg bg-slate-900/80 hover:bg-slate-800 text-slate-300 flex items-center space-x-1.5 transition-colors">
                 <Upload className="w-3 h-3 text-cyan-400" />
                 <span>Upload .log File</span>
@@ -100,6 +136,13 @@ Oct  6 10:18:02 server sshd[10421]: Failed password for invalid user root from 1
               </label>
             </div>
           </div>
+
+          {uploadedFileName && (
+            <div className="flex items-center space-x-2 text-xs font-mono text-cyan-300 bg-cyan-950/30 border border-cyan-500/30 px-3 py-1.5 rounded-lg">
+              <FileCheck className="w-3.5 h-3.5" />
+              <span>Loaded file: <strong>{uploadedFileName}</strong></span>
+            </div>
+          )}
 
           <textarea
             rows={8}
@@ -109,23 +152,64 @@ Oct  6 10:18:02 server sshd[10421]: Failed password for invalid user root from 1
             className="w-full p-4 text-xs font-mono saas-input text-slate-100 placeholder:text-slate-500 focus:border-cyan-400"
           />
 
-          <button
-            onClick={handleAnalyze}
-            disabled={loading || !logText.trim()}
-            className="cyber-btn-primary w-full py-3 text-xs font-heading font-bold uppercase tracking-wider flex items-center justify-center space-x-2 disabled:opacity-50"
-          >
-            {loading ? (
-              <>
-                <RefreshCw className="w-4 h-4 animate-spin" />
-                <span>Parsing SIEM Logs & Running Isolation Forest...</span>
-              </>
-            ) : (
-              <>
-                <FileText className="w-4 h-4" />
-                <span>Execute Log Anomaly Inspection</span>
-              </>
-            )}
-          </button>
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="flex items-center space-x-2">
+              <button
+                onClick={handleAnalyze}
+                disabled={loading || !logText.trim()}
+                className="cyber-btn-primary px-6 py-2.5 text-xs font-heading font-bold uppercase tracking-wider flex items-center justify-center space-x-2 disabled:opacity-50"
+              >
+                {loading ? (
+                  <>
+                    <RefreshCw className="w-4 h-4 animate-spin" />
+                    <span>Parsing SIEM Logs & Running Isolation Forest...</span>
+                  </>
+                ) : (
+                  <>
+                    <FileText className="w-4 h-4" />
+                    <span>Execute Log Anomaly Inspection</span>
+                  </>
+                )}
+              </button>
+
+              {logText && (
+                <button
+                  type="button"
+                  onClick={clearLogs}
+                  className="px-3.5 py-2 text-xs font-mono text-slate-400 hover:text-rose-300 rounded-xl bg-slate-900/60 hover:bg-slate-900 border border-slate-800 hover:border-rose-500/40 transition-colors flex items-center space-x-1.5"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                  <span>Clear</span>
+                </button>
+              )}
+            </div>
+
+            <span className="text-[11px] font-mono text-slate-400">
+              {logText ? `${logText.split('\n').filter(l => l.trim()).length} lines staged` : 'No lines staged'}
+            </span>
+          </div>
+
+          {/* Quick Presets */}
+          <div className="pt-3 border-t border-slate-800/80">
+            <span className="text-xs font-mono font-semibold text-slate-400 block mb-2">QUICK TEST PRESETS:</span>
+            <div className="flex flex-wrap gap-2">
+              {sampleDatasets.map((ds, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => {
+                    setLogText(ds.content);
+                    setUploadedFileName('');
+                    setError(null);
+                    setResult(null);
+                  }}
+                  className="text-[11px] font-mono px-3 py-1 rounded-lg bg-slate-900/80 hover:bg-slate-800 text-slate-300 hover:text-cyan-300 border border-slate-700/80 hover:border-cyan-500/40 transition-all text-left"
+                >
+                  {ds.label}
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
 
@@ -167,6 +251,17 @@ Oct  6 10:18:02 server sshd[10421]: Failed password for invalid user root from 1
               <span className="text-xl font-bold font-mono mt-1 block">{result.threat_rating}</span>
             </div>
           </div>
+
+          {/* ML Telemetry Banner if ML engine detected outliers */}
+          {result.ml_anomalies_detected > 0 && (
+            <div className="p-4 rounded-xl bg-cyan-950/40 border border-cyan-500/40 text-cyan-200 text-xs font-mono flex items-center space-x-3 shadow-[0_0_15px_rgba(34,211,238,0.15)]">
+              <Cpu className="w-5 h-5 text-cyan-400 shrink-0" />
+              <div>
+                <span className="font-bold text-cyan-300 uppercase">Isolation Forest ML Online: </span>
+                <span>Flagged {result.ml_anomalies_detected} behavioral statistical outlier(s) using unsupervised multi-variate vector scoring.</span>
+              </div>
+            </div>
+          )}
 
           {/* Anomaly Details Cards */}
           {result.anomalies && result.anomalies.length > 0 ? (
