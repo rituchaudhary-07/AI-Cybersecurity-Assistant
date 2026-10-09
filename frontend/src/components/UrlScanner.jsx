@@ -8,20 +8,66 @@ export default function UrlScanner() {
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
 
+  const validateUrlInput = (inputUrl) => {
+    const trimmed = (inputUrl || '').trim();
+    if (!trimmed) {
+      return 'Please enter a URL to analyze.';
+    }
+    if (trimmed.length > 4096) {
+      return 'URL exceeds maximum allowed length of 4096 characters.';
+    }
+    const lower = trimmed.toLowerCase();
+    const forbiddenSchemes = ['javascript:', 'data:', 'file:', 'vbscript:', 'blob:', 'about:'];
+    for (const scheme of forbiddenSchemes) {
+      if (lower.startsWith(scheme)) {
+        return `Unsupported or dangerous scheme '${scheme}'. Only HTTP and HTTPS are permitted.`;
+      }
+    }
+
+    // Validate that input contains a valid domain structure or IP address
+    let parseCandidate = trimmed;
+    if (!/^https?:\/\//i.test(parseCandidate)) {
+      parseCandidate = 'http://' + parseCandidate;
+    }
+
+    try {
+      const parsed = new URL(parseCandidate);
+      const host = parsed.hostname;
+      const isIp = /^(\d{1,3}\.){3}\d{1,3}$/.test(host) || host.startsWith('[') || host.includes(':');
+      if (!isIp && host !== 'localhost' && !host.includes('.')) {
+        return `Invalid URL '${trimmed}'. Please provide a valid domain (e.g. 'example.com') or IP address.`;
+      }
+    } catch {
+      return `Invalid URL format '${trimmed}'. Please enter a valid web address.`;
+    }
+
+    return null;
+  };
+
+
   const handleScan = async (e) => {
     e.preventDefault();
-    if (!url.trim()) return;
+    const validationErr = validateUrlInput(url);
+    if (validationErr) {
+      setError(validationErr);
+      return;
+    }
 
     setLoading(true);
     setError(null);
     try {
-      const response = await api.post('/scan/url', { url });
+      const response = await api.post('/scan/url', { url: url.trim() });
       setResult(response.data);
     } catch (err) {
       setError(err.response?.data?.detail || 'Failed to analyze URL. Please check server connectivity.');
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleSelectSample = (sampleUrl) => {
+    setUrl(sampleUrl);
+    setError(null);
   };
 
   const sampleUrls = [
@@ -40,7 +86,7 @@ export default function UrlScanner() {
           </div>
           <div>
             <h2 className="text-xl font-heading font-bold text-white">URL Phishing & Threat Detector</h2>
-            <p className="text-xs text-slate-400 font-mono">Random Forest ML & Lexical Feature Extraction Engine</p>
+
           </div>
         </div>
         <p className="text-xs text-slate-300 mt-2 max-w-2xl leading-relaxed">
@@ -54,9 +100,14 @@ export default function UrlScanner() {
             <input
               type="text"
               value={url}
-              onChange={(e) => setUrl(e.target.value)}
+              onChange={(e) => {
+                setUrl(e.target.value);
+                if (error) setError(null);
+              }}
               placeholder="Paste URL here (e.g. https://example.com/login)..."
-              className="w-full pl-10 pr-4 py-3 text-xs sm:text-sm saas-input text-slate-100 placeholder:text-slate-500 focus:border-cyan-400 font-mono"
+              className={`w-full pl-10 pr-4 py-3 text-xs sm:text-sm saas-input text-slate-100 placeholder:text-slate-500 font-mono transition-all ${
+                error ? 'border-rose-500/70 focus:border-rose-400' : 'focus:border-cyan-400'
+              }`}
             />
           </div>
           <button
@@ -84,7 +135,8 @@ export default function UrlScanner() {
           {sampleUrls.map((s, idx) => (
             <button
               key={idx}
-              onClick={() => setUrl(s)}
+              type="button"
+              onClick={() => handleSelectSample(s)}
               className="hover:text-cyan-300 underline truncate max-w-[240px] transition-colors"
             >
               {s}
@@ -104,11 +156,10 @@ export default function UrlScanner() {
       {result && (
         <div className="space-y-6">
           {/* Main Risk Overview */}
-          <div className={`p-6 rounded-2xl border ${
-            result.is_phishing 
-              ? 'bg-rose-950/40 border-rose-500/40 text-rose-200 shadow-[0_0_25px_rgba(239,68,68,0.2)]' 
+          <div className={`p-6 rounded-2xl border ${result.is_phishing
+              ? 'bg-rose-950/40 border-rose-500/40 text-rose-200 shadow-[0_0_25px_rgba(239,68,68,0.2)]'
               : 'bg-emerald-950/40 border-emerald-500/40 text-emerald-200 shadow-[0_0_25px_rgba(16,185,129,0.2)]'
-          }`}>
+            }`}>
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div className="flex items-center space-x-4">
                 {result.is_phishing ? (
@@ -127,8 +178,8 @@ export default function UrlScanner() {
 
               <div className="text-right bg-slate-900/90 px-5 py-3 rounded-xl border border-[var(--cyber-border)] shadow-md">
                 <span className="text-[10px] font-mono uppercase text-slate-400 font-semibold block">Phishing Risk Score</span>
-                <span className={`text-2xl font-bold font-mono ${result.risk_score > 50 ? 'text-rose-400' : 'text-emerald-400'}`}>
-                  {result.risk_score} / 100
+                <span className={`text-2xl font-bold font-mono ${result.risk_score > 5 ? 'text-rose-400' : 'text-emerald-400'}`}>
+                  {result.risk_score} / 10
                 </span>
               </div>
             </div>
@@ -147,11 +198,10 @@ export default function UrlScanner() {
                     <p className="text-xs font-semibold text-slate-200">{feat.name}</p>
                     <p className="text-[11px] font-mono text-slate-400">{feat.value}</p>
                   </div>
-                  <span className={`text-[10px] font-mono px-2 py-0.5 rounded font-semibold border ${
-                    feat.risk === 'High' ? 'bg-rose-500/15 text-rose-300 border-rose-500/40' :
-                    feat.risk === 'Medium' ? 'bg-amber-500/15 text-amber-300 border-amber-500/40' :
-                    'bg-emerald-500/15 text-emerald-300 border-emerald-500/40'
-                  }`}>
+                  <span className={`text-[10px] font-mono px-2 py-0.5 rounded font-semibold border ${feat.risk === 'High' ? 'bg-rose-500/15 text-rose-300 border-rose-500/40' :
+                      feat.risk === 'Medium' ? 'bg-amber-500/15 text-amber-300 border-amber-500/40' :
+                        'bg-emerald-500/15 text-emerald-300 border-emerald-500/40'
+                    }`}>
                     {feat.risk} Risk
                   </span>
                 </div>
