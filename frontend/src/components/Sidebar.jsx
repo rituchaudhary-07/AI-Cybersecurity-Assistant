@@ -34,14 +34,14 @@ export default function Sidebar({ activeTab, setActiveTab, mobileMenuOpen, setMo
       <div className="p-4 space-y-4">
         {/* Navigation Category Header */}
         <div className="flex items-center justify-between px-3 py-1">
-          <span className="text-[11px] font-heading uppercase tracking-widest text-cyan-400 font-bold flex items-center gap-1.5">
-            <Radio className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
+          <span className="text-[11px] font-heading uppercase tracking-widest text-[#0891B2] dark:text-cyan-400 font-bold flex items-center gap-1.5">
+            <Radio className="w-3.5 h-3.5 text-[#0891B2] dark:text-cyan-400 animate-pulse" />
             Security Modules
           </span>
           {setMobileMenuOpen && (
             <button
               onClick={() => setMobileMenuOpen(false)}
-              className="lg:hidden text-slate-400 hover:text-slate-100 p-1"
+              className="lg:hidden text-slate-500 dark:text-slate-400 hover:text-[var(--text-primary)] p-1"
             >
               <X className="w-4 h-4" />
             </button>
@@ -60,32 +60,32 @@ export default function Sidebar({ activeTab, setActiveTab, mobileMenuOpen, setMo
                 onClick={() => handleSelectTab(item.id)}
                 className={`w-full group flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs transition-all duration-200 ${
                   isCurrent
-                    ? 'border-l-[3px] border-cyan-400 bg-gradient-to-r from-cyan-500/15 via-blue-500/10 to-transparent text-[var(--text-primary)] font-semibold shadow-[inset_0_0_12px_rgba(34,211,238,0.1)] translate-x-1'
-                    : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-slate-800/40 hover:translate-x-1 border-l-[3px] border-transparent font-medium'
+                    ? 'border-l-[3px] border-[#0891B2] dark:border-cyan-400 bg-cyan-500/10 dark:bg-gradient-to-r dark:from-cyan-500/15 dark:via-blue-500/10 dark:to-transparent text-[var(--text-primary)] font-semibold shadow-[inset_0_0_12px_rgba(34,211,238,0.1)] translate-x-1'
+                    : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-slate-100 dark:hover:bg-slate-800/40 hover:translate-x-1 border-l-[3px] border-transparent font-medium'
                 }`}
               >
                 <div className="flex items-center space-x-3">
                   <div className={`p-1.5 rounded-lg transition-colors ${
                     isCurrent 
-                      ? 'bg-cyan-500/20 text-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.3)]' 
-                      : 'text-[var(--text-secondary)] group-hover:text-cyan-300 group-hover:bg-slate-800/60'
+                      ? 'bg-cyan-500/20 text-[#0891B2] dark:text-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.2)]' 
+                      : 'text-[var(--text-secondary)] group-hover:text-[#0891B2] dark:group-hover:text-cyan-300 group-hover:bg-slate-200/60 dark:group-hover:bg-slate-800/60'
                   }`}>
                     <Icon className="w-4 h-4" />
                   </div>
                   <span className="font-heading tracking-wide text-xs">{item.label}</span>
                 </div>
 
-                {/* Clean Status Indicator Dot & Category Tag (NO "Live" TEXT) */}
+                {/* Clean Status Indicator Dot & Category Tag */}
                 <div className="flex items-center space-x-1.5">
                   <span className={`text-[9px] font-mono px-1.5 py-0.5 rounded border transition-colors ${
                     isCurrent
-                      ? 'bg-cyan-500/20 text-cyan-300 border-cyan-400/40 font-semibold'
-                      : 'bg-slate-900/60 text-slate-400 border-slate-700/60 group-hover:border-slate-600'
+                      ? 'bg-cyan-500/10 text-[#0891B2] dark:text-cyan-300 border-cyan-500/30 font-semibold'
+                      : 'bg-slate-100 dark:bg-slate-900/60 text-slate-600 dark:text-slate-400 border-slate-300 dark:border-slate-700/60 group-hover:border-slate-400'
                   }`}>
                     {item.tag}
                   </span>
                   <span className={`w-1.5 h-1.5 rounded-full ${
-                    isCurrent ? 'bg-cyan-400 shadow-[0_0_6px_#22D3EE]' : 'bg-slate-600'
+                    isCurrent ? 'bg-[#0891B2] dark:bg-cyan-400 shadow-[0_0_6px_#0891B2]' : 'bg-slate-400 dark:bg-slate-600'
                   }`} />
                 </div>
               </button>
@@ -96,10 +96,10 @@ export default function Sidebar({ activeTab, setActiveTab, mobileMenuOpen, setMo
 
       {/* Footer System Health Telemetry Card */}
       <div className="p-4 border-t border-[var(--border-glow)] bg-[var(--bg-base)]/60">
-        <div className="p-3.5 rounded-xl bg-slate-950/70 border border-emerald-500/30 text-xs space-y-2 shadow-[0_0_15px_rgba(16,185,129,0.08)]">
+        <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950/70 border border-emerald-500/40 dark:border-emerald-500/30 text-xs space-y-2 shadow-[0_0_15px_rgba(16,185,129,0.08)]">
           <div className="flex items-center justify-between">
-            <span className="font-heading font-semibold text-slate-200 text-xs flex items-center space-x-2">
-              <Activity className="w-3.5 h-3.5 text-emerald-400 animate-pulse" />
+            <span className="font-heading font-semibold text-[var(--text-primary)] text-xs flex items-center space-x-2">
+              <Activity className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 animate-pulse" />
               <span className="text-[11px] tracking-wide">SOC DEFENSE STATUS</span>
             </span>
             <span className="flex h-2 w-2 relative">
@@ -107,11 +107,11 @@ export default function Sidebar({ activeTab, setActiveTab, mobileMenuOpen, setMo
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
             </span>
           </div>
-          <p className="text-[10px] text-slate-400 font-mono leading-relaxed">
+          <p className="text-[10px] text-[var(--text-secondary)] font-mono leading-relaxed">
             Threat engines & AI models online. Zero active perimeter breaches.
           </p>
-          <div className="w-full bg-slate-800/80 rounded-full h-1.5 overflow-hidden">
-            <div className="bg-gradient-to-r from-cyan-400 to-emerald-400 h-full w-full rounded-full"></div>
+          <div className="w-full bg-slate-200 dark:bg-slate-800/80 rounded-full h-1.5 overflow-hidden">
+            <div className="bg-gradient-to-r from-cyan-500 to-emerald-500 h-full w-full rounded-full"></div>
           </div>
         </div>
       </div>

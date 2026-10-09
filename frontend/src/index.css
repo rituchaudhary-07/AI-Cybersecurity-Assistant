@@ -14,11 +14,14 @@
   --bg-elevated: #0F1D38;
   --border-glow: rgba(34, 211, 238, 0.25);
   --border-glow-strong: rgba(0, 229, 255, 0.55);
+  --cyber-border: rgba(34, 211, 238, 0.25);
+  --cyber-surface: #0A1428;
   --accent: #22D3EE;
   --accent-strong: #00E5FF;
   --blue: #2563EB;
   --text-primary: #FFFFFF;
   --text-secondary: #94A3B8;
+  --text-muted: #64748B;
   --success: #10B981;
   --warning: #F59E0B;
   --danger: #EF4444;
@@ -30,22 +33,25 @@
   --font-mono: 'JetBrains Mono', monospace;
 }
 
-/* Light Mode Toggle */
+/* Light Mode Specifications */
 [data-theme="light"] {
-  --bg-base: #EAF2FB;
+  --bg-base: #F1F5F9;
   --bg-surface: #FFFFFF;
-  --bg-elevated: #F1F6FD;
-  --border-glow: rgba(8, 145, 178, 0.25);
-  --border-glow-strong: rgba(8, 145, 178, 0.55);
+  --bg-elevated: #F8FAFC;
+  --border-glow: #CBD5E1;
+  --border-glow-strong: #0891B2;
+  --cyber-border: #CBD5E1;
+  --cyber-surface: #FFFFFF;
   --accent: #0891B2;
-  --accent-strong: #0284C7;
+  --accent-strong: #0E7490;
   --blue: #2563EB;
-  --text-primary: #0B1B3A;
+  --text-primary: #0F172A;
   --text-secondary: #475569;
+  --text-muted: #64748B;
   --success: #10B981;
   --warning: #D97706;
   --danger: #DC2626;
-  --card-glass: rgba(255, 255, 255, 0.92);
+  --card-glass: #FFFFFF;
 }
 
 @layer base {
@@ -97,10 +103,10 @@
 
 [data-theme="light"] .circuit-bg {
   background-image: 
-    radial-gradient(circle at 75% 30%, rgba(8, 145, 178, 0.10) 0%, transparent 45%),
-    radial-gradient(circle at 20% 70%, rgba(37, 99, 235, 0.08) 0%, transparent 40%),
-    linear-gradient(rgba(8, 145, 178, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(8, 145, 178, 0.05) 1px, transparent 1px);
+    radial-gradient(circle at 75% 30%, rgba(8, 145, 178, 0.08) 0%, transparent 45%),
+    radial-gradient(circle at 20% 70%, rgba(37, 99, 235, 0.06) 0%, transparent 40%),
+    linear-gradient(rgba(203, 213, 225, 0.4) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(203, 213, 225, 0.4) 1px, transparent 1px);
 }
 
 /* ==========================================================================
@@ -121,8 +127,15 @@
   transform: translateY(-2px);
 }
 
+[data-theme="light"] .cyber-glass-card {
+  background: #FFFFFF;
+  border-color: #CBD5E1;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
+}
+
 [data-theme="light"] .cyber-glass-card:hover {
-  box-shadow: 0 0 25px rgba(8, 145, 178, 0.2), 0 8px 24px rgba(0, 0, 0, 0.08);
+  border-color: #0891B2;
+  box-shadow: 0 8px 30px -4px rgba(8, 145, 178, 0.15);
 }
 
 /* Backward compatibility classes */
@@ -141,15 +154,22 @@
     radial-gradient(circle at 70% 70%, rgba(37, 99, 235, 0.12) 0%, transparent 45%);
 }
 
+[data-theme="light"] .auth-shell {
+  background-color: #F1F5F9;
+  background-image: 
+    radial-gradient(circle at 30% 30%, rgba(8, 145, 178, 0.10) 0%, transparent 45%),
+    radial-gradient(circle at 70% 70%, rgba(37, 99, 235, 0.08) 0%, transparent 45%);
+}
+
 .auth-grid {
   @apply circuit-bg;
 }
 
 /* ==========================================================================
-   PILL BUTTONS (MATCHING REFERENCE "READ MORE" STYLE)
+   BUTTONS (PRIMARY & SECONDARY PILL BUTTONS)
    ========================================================================== */
-/* Primary Pill Button: White fill with glowing cyan outline & dark text */
-.cyber-pill-primary {
+.cyber-pill-primary,
+.cyber-btn-primary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -165,14 +185,37 @@
   overflow: hidden;
 }
 
-.cyber-pill-primary:hover {
+.cyber-pill-primary:hover,
+.cyber-btn-primary:hover {
   background: #E0F7FA;
   box-shadow: 0 0 32px rgba(0, 229, 255, 0.7);
   transform: translateY(-1px) scale(1.02);
   color: #000000;
 }
 
-/* Secondary Pill Button: Glowing translucent cyan border */
+/* Light theme button specifications */
+[data-theme="light"] .cyber-pill-primary,
+[data-theme="light"] .cyber-btn-primary {
+  background: #0891B2 !important;
+  color: #FFFFFF !important;
+  border: 2px solid #0891B2 !important;
+  box-shadow: 0 4px 14px rgba(8, 145, 178, 0.3) !important;
+}
+
+[data-theme="light"] .cyber-pill-primary:hover,
+[data-theme="light"] .cyber-btn-primary:hover {
+  background: #0E7490 !important;
+  border-color: #0E7490 !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 6px 20px rgba(14, 116, 144, 0.4) !important;
+  transform: translateY(-1px) scale(1.02);
+}
+
+[data-theme="light"] .cyber-pill-primary svg,
+[data-theme="light"] .cyber-btn-primary svg {
+  color: #FFFFFF !important;
+}
+
 .cyber-pill-secondary {
   display: inline-flex;
   align-items: center;
@@ -194,6 +237,24 @@
   box-shadow: 0 0 20px rgba(34, 211, 238, 0.3);
 }
 
+[data-theme="light"] .cyber-pill-secondary {
+  background: #F1F5F9 !important;
+  border: 1.5px solid #CBD5E1 !important;
+  color: #0F172A !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+}
+
+[data-theme="light"] .cyber-pill-secondary:hover {
+  background: #E2E8F0 !important;
+  border-color: #0891B2 !important;
+  color: #0891B2 !important;
+  box-shadow: 0 4px 12px rgba(8, 145, 178, 0.15) !important;
+}
+
+[data-theme="light"] .cyber-pill-secondary svg {
+  color: #0891B2 !important;
+}
+
 .saas-btn-primary {
   @apply cyber-pill-primary;
 }
@@ -202,7 +263,9 @@
   @apply cyber-pill-secondary;
 }
 
-/* Inputs */
+/* ==========================================================================
+   INPUTS & FORM CONTROLS
+   ========================================================================== */
 .saas-input, .glass-input {
   background: rgba(10, 20, 40, 0.7);
   border: 1px solid var(--border-glow);
@@ -217,10 +280,81 @@
   box-shadow: 0 0 15px rgba(34, 211, 238, 0.35);
 }
 
-[data-theme="light"] .saas-input, [data-theme="light"] .glass-input {
-  background: #FFFFFF;
-  border-color: rgba(8, 145, 178, 0.3);
-  color: #0B1B3A;
+[data-theme="light"] .saas-input, 
+[data-theme="light"] .glass-input,
+[data-theme="light"] input,
+[data-theme="light"] textarea,
+[data-theme="light"] select {
+  background: #FFFFFF !important;
+  border-color: #CBD5E1 !important;
+  color: #0F172A !important;
+}
+
+[data-theme="light"] input::placeholder,
+[data-theme="light"] textarea::placeholder {
+  color: #64748B !important;
+}
+
+[data-theme="light"] .saas-input:focus, 
+[data-theme="light"] .glass-input:focus,
+[data-theme="light"] input:focus,
+[data-theme="light"] textarea:focus {
+  outline: none;
+  border-color: #0891B2 !important;
+  box-shadow: 0 0 0 3px rgba(8, 145, 178, 0.15) !important;
+}
+
+/* ==========================================================================
+   LIGHT THEME TEXT & CONTAINER OVERRIDES
+   ========================================================================== */
+[data-theme="light"] .text-white {
+  color: #0F172A;
+}
+
+[data-theme="light"] .text-slate-100,
+[data-theme="light"] .text-slate-200 {
+  color: #0F172A;
+}
+
+[data-theme="light"] .text-slate-300,
+[data-theme="light"] .text-slate-400 {
+  color: #475569;
+}
+
+[data-theme="light"] .text-slate-500 {
+  color: #64748B;
+}
+
+[data-theme="light"] .text-cyan-300,
+[data-theme="light"] .text-cyan-400 {
+  color: #0891B2;
+}
+
+[data-theme="light"] .bg-slate-900,
+[data-theme="light"] .bg-slate-950,
+[data-theme="light"] .bg-\[\#040B1A\] {
+  background-color: #F8FAFC;
+}
+
+[data-theme="light"] .border-slate-800,
+[data-theme="light"] .border-slate-700 {
+  border-color: #CBD5E1;
+}
+
+/* Preserved Console Block inside Light Mode */
+[data-theme="light"] .soc-terminal-feed {
+  background-color: #0F172A !important;
+  border-color: #334155 !important;
+}
+[data-theme="light"] .soc-terminal-feed .text-slate-400 {
+  color: #94A3B8 !important;
+}
+[data-theme="light"] .soc-terminal-feed .text-slate-300 {
+  color: #CBD5E1 !important;
+}
+[data-theme="light"] .soc-terminal-feed .text-cyan-300,
+[data-theme="light"] .soc-terminal-feed .text-cyan-400 {
+  color: #38BDF8 !important;
 }
 
 /* ==========================================================================
@@ -267,6 +401,10 @@
   animation: radarSweep 3.5s linear infinite;
 }
 
+[data-theme="light"] .radar-sweep-beam {
+  background: conic-gradient(from 0deg, transparent 0deg, transparent 270deg, rgba(8, 145, 178, 0.25) 360deg);
+}
+
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
@@ -280,6 +418,10 @@
 ::-webkit-scrollbar-thumb {
   background: rgba(34, 211, 238, 0.35);
   border-radius: 99px;
+}
+
+[data-theme="light"] ::-webkit-scrollbar-thumb {
+  background: rgba(8, 145, 178, 0.35);
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -300,3 +442,4 @@
     transition-duration: 0.01ms !important;
   }
 }
+

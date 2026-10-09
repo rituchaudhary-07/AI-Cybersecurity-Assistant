@@ -97,23 +97,23 @@ export default function Dashboard() {
               {/* Reference Hero Workspace with Glowing Padlock Emblem & Circuit Traces */}
               <div className="cyber-glass-card shadow-[0_0_50px_rgba(34,211,238,0.15)] relative overflow-hidden border border-[var(--border-glow)]">
                 {/* Radial Backdrop Glow */}
-                <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[450px] h-[450px] bg-cyan-500/15 rounded-full blur-[90px] pointer-events-none" />
+                <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[450px] h-[450px] bg-cyan-500/10 dark:bg-cyan-500/15 rounded-full blur-[90px] pointer-events-none" />
 
                 <div className="p-6 sm:p-8 lg:p-10 relative z-10">
                   <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                     
                     {/* Left Hero Text Section */}
                     <div className="lg:col-span-7 space-y-5">
-                      <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-400/30 text-xs font-mono text-cyan-300 shadow-[0_0_12px_rgba(34,211,238,0.2)]">
-                        <Radio className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
+                      <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-400/30 text-xs font-mono text-cyan-600 dark:text-cyan-300 shadow-[0_0_12px_rgba(34,211,238,0.2)]">
+                        <Radio className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400 animate-pulse" />
                         <span className="font-semibold tracking-wide">Threat Intelligence Suite Active</span>
                       </div>
 
-                      <h2 className="text-2xl sm:text-3xl lg:text-4xl font-heading font-extrabold text-white tracking-tight leading-tight">
-                        AI CYBERSECURITY ASSISTANT & <span className="bg-gradient-to-r from-white via-cyan-200 to-cyan-400 bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(34,211,238,0.4)]">THREAT DEFENSE</span>
+                      <h2 className="text-2xl sm:text-3xl lg:text-4xl font-heading font-extrabold text-[var(--text-primary)] tracking-tight leading-tight">
+                        AI CYBERSECURITY ASSISTANT & THREAT <span className="text-[#0891B2] dark:bg-gradient-to-r dark:from-white dark:via-cyan-200 dark:to-cyan-400 dark:bg-clip-text dark:text-transparent dark:drop-shadow-[0_0_15px_rgba(34,211,238,0.4)]">DEFENSE</span>
                       </h2>
 
-                      <p className="text-sm text-slate-300 leading-relaxed max-w-xl font-normal">
+                      <p className="text-sm text-[var(--text-secondary)] leading-relaxed max-w-xl font-normal">
                         Advanced cybersecurity intelligence center powered by machine learning and LLM reasoning. Real-time password entropy audits, RAG defense advisor, phishing detection, SIEM log parsing, and automated vulnerability scanning.
                       </p>
 
@@ -123,24 +123,24 @@ export default function Dashboard() {
                           onClick={() => setActiveTab('password')}
                           className="cyber-pill-primary px-6 py-3 text-xs font-heading font-bold uppercase tracking-wider flex items-center space-x-2"
                         >
-                          <KeyRound className="w-4 h-4 text-[#040B1A]" />
+                          <KeyRound className="w-4 h-4 text-white dark:text-[#040B1A]" />
                           <span>Audit Passwords</span>
-                          <ArrowRight className="w-3.5 h-3.5 text-[#040B1A]" />
+                          <ArrowRight className="w-3.5 h-3.5 text-white dark:text-[#040B1A]" />
                         </button>
 
                         <button
                           onClick={() => setActiveTab('vulnerability')}
                           className="cyber-pill-secondary px-6 py-3 text-xs font-heading font-semibold uppercase tracking-wider flex items-center space-x-2"
                         >
-                          <ShieldAlert className="w-4 h-4 text-cyan-400" />
+                          <ShieldAlert className="w-4 h-4 text-[#0891B2] dark:text-cyan-400" />
                           <span>Vuln Scanner</span>
                         </button>
 
                         <button
                           onClick={() => setActiveTab('chatbot')}
-                          className="px-5 py-3 text-xs font-mono text-slate-300 hover:text-cyan-300 flex items-center space-x-2 transition-colors border border-transparent hover:border-cyan-500/30 rounded-full hover:bg-slate-900/60"
+                          className="px-5 py-3 text-xs font-mono text-[var(--text-secondary)] hover:text-[var(--accent)] flex items-center space-x-2 transition-colors border border-transparent hover:border-cyan-500/30 rounded-full hover:bg-slate-200/50 dark:hover:bg-slate-900/60"
                         >
-                          <Sparkles className="w-4 h-4 text-cyan-400" />
+                          <Sparkles className="w-4 h-4 text-[#0891B2] dark:text-cyan-400" />
                           <span>AI Security Mentor</span>
                         </button>
                       </div>
@@ -163,7 +163,7 @@ export default function Dashboard() {
                           </defs>
 
                           {/* Circuit Traces */}
-                          <g stroke="#22D3EE" strokeWidth="1.5" fill="none" opacity="0.45" filter="url(#glow-cyan)">
+                          <g stroke="#0891B2" className="dark:stroke-[#22D3EE]" strokeWidth="1.5" fill="none" opacity="0.45" filter="url(#glow-cyan)">
                             <path d="M 150 40 L 150 10 L 190 10" className="circuit-pulse-line" />
                             <path d="M 150 260 L 150 290 L 110 290" className="circuit-pulse-line" />
                             <path d="M 40 150 L 10 150 L 10 190" className="circuit-pulse-line" />
@@ -175,7 +175,7 @@ export default function Dashboard() {
                           </g>
 
                           {/* Circuit Terminal Nodes */}
-                          <g fill="#22D3EE" opacity="0.8">
+                          <g fill="#0891B2" className="dark:fill-[#22D3EE]" opacity="0.8">
                             <circle cx="190" cy="10" r="3" />
                             <circle cx="110" cy="290" r="3" />
                             <circle cx="10" cy="190" r="3" />
@@ -191,11 +191,11 @@ export default function Dashboard() {
                             cx="150"
                             cy="150"
                             r="115"
-                            stroke="#00E5FF"
+                            stroke="#0891B2"
                             strokeWidth="1.5"
                             fill="none"
                             opacity="0.5"
-                            className="padlock-ring-outer"
+                            className="dark:stroke-[#00E5FF] padlock-ring-outer"
                           />
 
                           {/* Inner Neon Rotating Ring */}
@@ -215,17 +215,17 @@ export default function Dashboard() {
                             cx="150"
                             cy="150"
                             r="75"
-                            fill="#0A1428"
-                            stroke="#22D3EE"
+                            fill="var(--bg-surface)"
+                            stroke="var(--accent)"
                             strokeWidth="2"
                             filter="url(#glow-cyan)"
                           />
                         </svg>
 
                         {/* Central Glowing Cyan Padlock & Shield Icon */}
-                        <div className="relative z-10 flex flex-col items-center justify-center text-cyan-300 drop-shadow-[0_0_20px_rgba(0,229,255,0.75)] animate-pulse-slow">
-                          <Lock className="w-14 h-14 text-cyan-400 stroke-[2.2]" />
-                          <span className="font-mono font-bold text-[10px] tracking-widest text-cyan-300 mt-1 uppercase">
+                        <div className="relative z-10 flex flex-col items-center justify-center text-[var(--accent)] drop-shadow-[0_0_20px_rgba(8,145,178,0.4)] dark:drop-shadow-[0_0_20px_rgba(0,229,255,0.75)] animate-pulse-slow">
+                          <Lock className="w-14 h-14 text-[var(--accent)] stroke-[2.2]" />
+                          <span className="font-mono font-bold text-[10px] tracking-widest text-[var(--accent)] mt-1 uppercase">
                             SOC SECURED
                           </span>
                         </div>
@@ -300,7 +300,7 @@ export default function Dashboard() {
                   </div>
 
                   {/* Mini Scrolling Terminal Feed */}
-                  <div className="bg-[#040B1A] border border-slate-800 rounded-xl p-3.5 space-y-1.5 font-mono text-[10px]">
+                  <div className="soc-terminal-feed bg-[#040B1A] border border-slate-800 rounded-xl p-3.5 space-y-1.5 font-mono text-[10px]">
                     <div className="flex items-center justify-between text-slate-400 border-b border-slate-800/80 pb-1">
                       <div className="flex items-center space-x-1.5 text-cyan-400">
                         <Terminal className="w-3 h-3" />

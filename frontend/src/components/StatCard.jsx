@@ -81,12 +81,12 @@ export default function StatCard({
 
       {/* Header Row */}
       <div className="h-6 flex items-center justify-between">
-        <span className="text-[11px] font-mono font-semibold uppercase tracking-wider text-[var(--text-secondary)] group-hover:text-cyan-300 transition-colors">
+        <span className="text-[11px] font-mono font-semibold uppercase tracking-wider text-[var(--text-secondary)] group-hover:text-[var(--accent)] transition-colors">
           {title}
         </span>
         
         {/* Futuristic Icon Container */}
-        <div className="p-1.5 rounded-lg bg-slate-900/80 border border-cyan-400/30 text-cyan-400 group-hover:border-cyan-400 group-hover:shadow-[0_0_12px_rgba(34,211,238,0.3)] transition-all">
+        <div className="p-1.5 rounded-lg bg-slate-100 dark:bg-slate-900/80 border border-slate-300 dark:border-cyan-400/30 text-[#0891B2] dark:text-cyan-400 group-hover:border-[#0891B2] dark:group-hover:border-cyan-400 group-hover:shadow-[0_0_12px_rgba(34,211,238,0.2)] transition-all">
           {Icon ? <Icon className="w-4 h-4" /> : <Activity className="w-4 h-4" />}
         </div>
       </div>
@@ -99,7 +99,7 @@ export default function StatCard({
             <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400 shadow-[0_0_8px_#10B981]"></span>
           </span>
         )}
-        <p className="text-2xl font-bold font-mono text-[var(--text-primary)] tracking-tight group-hover:text-cyan-300 transition-colors drop-shadow-[0_0_10px_rgba(34,211,238,0.2)]">
+        <p className="text-2xl font-bold font-mono text-[var(--text-primary)] tracking-tight group-hover:text-[var(--accent)] transition-colors">
           {value}
         </p>
       </div>
@@ -124,7 +124,7 @@ export default function StatCard({
               </defs>
               <polyline
                 fill="none"
-                stroke="#22D3EE"
+                stroke="var(--accent)"
                 strokeWidth="2.2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
