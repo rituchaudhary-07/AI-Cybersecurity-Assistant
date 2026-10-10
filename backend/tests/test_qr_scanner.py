@@ -1,6 +1,6 @@
 import io
 import pytest
-import qrcode
+qrcode = pytest.importorskip("qrcode")
 from fastapi.testclient import TestClient
 from app.main import app
 from app.services.qr_scanner import scan_qr_image

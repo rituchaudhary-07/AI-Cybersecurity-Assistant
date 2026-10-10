@@ -166,8 +166,29 @@ export default function Dashboard() {
                             </filter>
                           </defs>
 
+                          {/* HUD Reticle Target Brackets & Cardinal Crosshairs */}
+                          <g stroke="#0891B2" className="dark:stroke-[#22D3EE]" strokeWidth="1.2" fill="none" opacity="0.4">
+                            {/* Corner HUD Brackets */}
+                            <path d="M 45 60 L 45 45 L 60 45" />
+                            <path d="M 240 45 L 255 45 L 255 60" />
+                            <path d="M 45 240 L 45 255 L 60 255" />
+                            <path d="M 240 255 L 255 255 L 255 240" />
+
+                            {/* Reticle Crosses */}
+                            <path d="M 72 77 L 78 77 M 75 74 L 75 80" />
+                            <path d="M 222 77 L 228 77 M 225 74 L 225 80" />
+                            <path d="M 72 223 L 78 223 M 75 220 L 75 226" />
+                            <path d="M 222 223 L 228 223 M 225 220 L 225 226" />
+
+                            {/* Cardinal Reticle Ticks */}
+                            <line x1="150" y1="28" x2="150" y2="38" />
+                            <line x1="150" y1="262" x2="150" y2="272" />
+                            <line x1="28" y1="150" x2="38" y2="150" />
+                            <line x1="262" y1="150" x2="272" y2="150" />
+                          </g>
+
                           {/* Circuit Traces */}
-                          <g stroke="#0891B2" className="dark:stroke-[#22D3EE]" strokeWidth="1.5" fill="none" opacity="0.45" filter="url(#glow-cyan)">
+                          <g stroke="#0891B2" className="dark:stroke-[#22D3EE]" strokeWidth="1.5" fill="none" opacity="0.55" filter="url(#glow-cyan)">
                             <path d="M 150 40 L 150 10 L 190 10" className="circuit-pulse-line" />
                             <path d="M 150 260 L 150 290 L 110 290" className="circuit-pulse-line" />
                             <path d="M 40 150 L 10 150 L 10 190" className="circuit-pulse-line" />
@@ -179,7 +200,7 @@ export default function Dashboard() {
                           </g>
 
                           {/* Circuit Terminal Nodes */}
-                          <g fill="#0891B2" className="dark:fill-[#22D3EE]" opacity="0.8">
+                          <g fill="#0891B2" className="dark:fill-[#22D3EE] animate-pulse" opacity="0.85">
                             <circle cx="190" cy="10" r="3" />
                             <circle cx="110" cy="290" r="3" />
                             <circle cx="10" cy="190" r="3" />
@@ -190,29 +211,44 @@ export default function Dashboard() {
                             <circle cx="285" cy="260" r="3" />
                           </g>
 
-                          {/* Outer Neon Rotating Ring */}
-                          <circle
-                            cx="150"
-                            cy="150"
-                            r="115"
-                            stroke="#0891B2"
-                            strokeWidth="1.5"
-                            fill="none"
-                            opacity="0.5"
-                            className="dark:stroke-[#00E5FF] padlock-ring-outer"
-                          />
+                          {/* Outer Neon Rotating Ring (Clockwise) with Orbiting Satellites */}
+                          <g className="padlock-ring-outer" style={{ transformOrigin: '150px 150px' }}>
+                            <circle
+                              cx="150"
+                              cy="150"
+                              r="115"
+                              stroke="#0891B2"
+                              strokeWidth="1.5"
+                              strokeDasharray="10 8"
+                              fill="none"
+                              opacity="0.65"
+                              className="dark:stroke-[#00E5FF]"
+                            />
+                            {/* Orbiting Satellite Dots & Accent Ticks */}
+                            <circle cx="265" cy="150" r="3.5" fill="#0891B2" className="dark:fill-[#00E5FF]" />
+                            <circle cx="35" cy="150" r="3.5" fill="#0891B2" className="dark:fill-[#00E5FF]" />
+                            <circle cx="150" cy="35" r="3" fill="#0891B2" className="dark:fill-[#00E5FF]" opacity="0.8" />
+                            <circle cx="150" cy="265" r="3" fill="#0891B2" className="dark:fill-[#00E5FF]" opacity="0.8" />
+                            <line x1="261" y1="150" x2="269" y2="150" stroke="#0891B2" className="dark:stroke-[#00E5FF]" strokeWidth="2" />
+                            <line x1="31" y1="150" x2="39" y2="150" stroke="#0891B2" className="dark:stroke-[#00E5FF]" strokeWidth="2" />
+                          </g>
 
-                          {/* Inner Neon Rotating Ring */}
-                          <circle
-                            cx="150"
-                            cy="150"
-                            r="95"
-                            stroke="#2563EB"
-                            strokeWidth="2"
-                            fill="none"
-                            opacity="0.6"
-                            className="padlock-ring-inner"
-                          />
+                          {/* Inner Neon Rotating Ring (Counter-Clockwise) */}
+                          <g className="padlock-ring-inner" style={{ transformOrigin: '150px 150px' }}>
+                            <circle
+                              cx="150"
+                              cy="150"
+                              r="95"
+                              stroke="#2563EB"
+                              strokeWidth="2"
+                              strokeDasharray="4 6"
+                              fill="none"
+                              opacity="0.7"
+                              className="dark:stroke-[#3B82F6]"
+                            />
+                            <circle cx="150" cy="55" r="2.5" fill="#2563EB" className="dark:fill-[#60A5FA]" />
+                            <circle cx="150" cy="245" r="2.5" fill="#2563EB" className="dark:fill-[#60A5FA]" />
+                          </g>
 
                           {/* Solid Glowing Core Circle */}
                           <circle
@@ -223,6 +259,7 @@ export default function Dashboard() {
                             stroke="var(--accent)"
                             strokeWidth="2"
                             filter="url(#glow-cyan)"
+                            className="padlock-core-pulse"
                           />
                         </svg>
 

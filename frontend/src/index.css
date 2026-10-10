@@ -361,15 +361,17 @@
    FOCAL POINT PADLOCK & NEON RING ANIMATIONS
    ========================================================================== */
 .padlock-ring-outer {
-  stroke-dasharray: 8 6;
-  animation: ringSpin 35s linear infinite;
-  transform-origin: center;
+  transform-origin: 150px 150px;
+  transform-box: fill-box;
+  animation: ringSpin 12s linear infinite;
+  will-change: transform;
 }
 
 .padlock-ring-inner {
-  stroke-dasharray: 4 4;
-  animation: ringSpinReverse 25s linear infinite;
-  transform-origin: center;
+  transform-origin: 150px 150px;
+  transform-box: fill-box;
+  animation: ringSpinReverse 8s linear infinite;
+  will-change: transform;
 }
 
 @keyframes ringSpin {
@@ -383,13 +385,35 @@
 }
 
 .circuit-pulse-line {
-  stroke-dasharray: 10 15;
-  animation: circuitTrace 6s linear infinite;
+  stroke-dasharray: 8 16;
+  animation: circuitTrace 2.4s linear infinite;
 }
 
 @keyframes circuitTrace {
-  0% { stroke-dashoffset: 100; }
-  100% { stroke-dashoffset: 0; }
+  0% {
+    stroke-dashoffset: 48;
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.95;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0.35;
+  }
+}
+
+.padlock-core-pulse {
+  animation: padlockCoreBreath 3.5s ease-in-out infinite;
+}
+
+@keyframes padlockCoreBreath {
+  0%, 100% {
+    filter: drop-shadow(0 0 6px rgba(8, 145, 178, 0.4));
+  }
+  50% {
+    filter: drop-shadow(0 0 18px rgba(0, 229, 255, 0.85));
+  }
 }
 
 .radar-sweep-beam {
@@ -399,6 +423,11 @@
   border-radius: 50%;
   background: conic-gradient(from 0deg, transparent 0deg, transparent 270deg, rgba(34, 211, 238, 0.3) 360deg);
   animation: radarSweep 3.5s linear infinite;
+}
+
+@keyframes radarSweep {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 [data-theme="light"] .radar-sweep-beam {

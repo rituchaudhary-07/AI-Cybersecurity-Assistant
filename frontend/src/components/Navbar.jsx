@@ -73,7 +73,7 @@ export default function Navbar({
           <h1 className="font-heading font-extrabold text-base sm:text-lg tracking-wider text-[var(--text-primary)] flex items-center gap-2">
             CYBER <span className="text-[#0891B2] dark:text-cyan-400 dark:drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]">COMMAND</span>
             <span className="hidden sm:inline-block text-[10px] font-mono px-2 py-0.5 rounded border border-cyan-400/30 bg-cyan-500/10 text-[#0891B2] dark:text-cyan-300 font-semibold tracking-normal">
-              SOC v2.4
+              v2.4
             </span>
           </h1>
           <p className="text-[11px] text-[var(--text-secondary)] hidden sm:block font-mono tracking-tight">
@@ -89,7 +89,7 @@ export default function Navbar({
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-80"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
           </div>
-          <span className="text-slate-600 dark:text-slate-400 text-[11px]">SOC DEFENSE:</span>
+          <span className="text-slate-600 dark:text-slate-400 text-[11px]">DEFENSE:</span>
           <span className="text-emerald-600 dark:text-emerald-400 font-semibold tracking-wide text-[11px]">ACTIVE</span>
         </div>
 

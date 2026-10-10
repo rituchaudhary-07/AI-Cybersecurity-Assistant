@@ -51,13 +51,13 @@ export default function Login({ onSwitchToRegister }) {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <label className="block text-xs font-mono font-medium text-slate-300">
-            Email address
+            Username or Email Address
             <span className="relative mt-1.5 block">
               <Mail className="absolute left-3.5 top-3.5 h-4 w-4 text-slate-400" />
               <input
-                type="email"
+                type="text"
                 required
-                autoComplete="email"
+                autoComplete="username"
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
                 placeholder="operator@security.io"
@@ -75,7 +75,7 @@ export default function Login({ onSwitchToRegister }) {
                 autoComplete="current-password"
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
-                placeholder="Enter password"
+                placeholder="••••••••••••"
                 className="saas-input w-full rounded-xl py-2.5 pl-10 pr-4 text-xs sm:text-sm text-slate-100 placeholder:text-slate-500 focus:border-cyan-400 font-mono"
               />
             </span>

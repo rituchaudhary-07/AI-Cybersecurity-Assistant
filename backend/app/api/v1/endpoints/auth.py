@@ -16,7 +16,7 @@ class UserRegister(BaseModel):
     password: str
 
 class UserLogin(BaseModel):
-    email: EmailStr
+    email: str
     password: str
 
 class TokenResponse(BaseModel):
@@ -99,7 +99,15 @@ async def register(user_in: UserRegister):
 
 @router.post("/login", response_model=TokenResponse)
 async def login(credentials: UserLogin):
-    email = credentials.email.lower()
+    raw_email = credentials.email.strip().lower()
+    
+    # Friendly alias mapping
+    if raw_email == "admin":
+        email = "admin@security.io"
+    elif raw_email == "operator":
+        email = "operator@security.io"
+    else:
+        email = raw_email
     
     user = None
     if db_manager.is_connected:

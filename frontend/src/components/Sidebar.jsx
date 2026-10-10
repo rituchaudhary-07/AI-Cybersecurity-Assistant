@@ -17,15 +17,15 @@ import {
 
 export default function Sidebar({ activeTab, setActiveTab, mobileMenuOpen, setMobileMenuOpen }) {
   const menuItems = [
-    { id: 'dashboard', label: 'Dashboard Overview', icon: LayoutDashboard, tag: 'SOC' },
-    { id: 'password', label: 'Password Strength ML', icon: KeyRound, tag: 'ML' },
-    { id: 'chatbot', label: 'AI Security Assistant', icon: MessageSquare, tag: 'RAG' },
-    { id: 'phishing', label: 'URL Phishing Scanner', icon: Globe, tag: 'NET' },
-    { id: 'qr', label: 'QR Code Safety Checker', icon: QrCode, tag: 'QR' },
-    { id: 'spam', label: 'Spam & Scam Detector', icon: MailWarning, tag: 'SPAM' },
-    { id: 'log', label: 'Log File Analyzer', icon: FileText, tag: 'SIEM' },
-    { id: 'vulnerability', label: 'Vulnerability Scanner', icon: ShieldAlert, tag: 'AUDIT' },
-    { id: 'reports', label: 'Reports & AI Advice', icon: Sparkles, tag: 'INTEL' },
+    { id: 'dashboard', label: 'Dashboard Overview', icon: LayoutDashboard },
+    { id: 'password', label: 'Password Security Analyzer', icon: KeyRound },
+    { id: 'chatbot', label: 'AI Security Assistant', icon: MessageSquare },
+    { id: 'phishing', label: 'URL Phishing Scanner', icon: Globe },
+    { id: 'qr', label: 'QR Code Safety Checker', icon: QrCode },
+    { id: 'spam', label: 'Spam & Scam Detector', icon: MailWarning },
+    { id: 'log', label: 'Log File Analyzer', icon: FileText },
+    { id: 'vulnerability', label: 'Vulnerability Scanner', icon: ShieldAlert },
+    { id: 'reports', label: 'Reports & AI Advice', icon: Sparkles },
   ];
 
   const handleSelectTab = (itemId) => {
@@ -62,7 +62,7 @@ export default function Sidebar({ activeTab, setActiveTab, mobileMenuOpen, setMo
               <button
                 key={item.id}
                 onClick={() => handleSelectTab(item.id)}
-                className={`w-full group flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs transition-all duration-200 ${
+                className={`w-full group flex items-center px-3.5 py-2.5 rounded-xl text-xs transition-all duration-200 ${
                   isCurrent
                     ? 'border-l-[3px] border-[#0891B2] dark:border-cyan-400 bg-cyan-500/10 dark:bg-gradient-to-r dark:from-cyan-500/15 dark:via-blue-500/10 dark:to-transparent text-[var(--text-primary)] font-semibold shadow-[inset_0_0_12px_rgba(34,211,238,0.1)] translate-x-1'
                     : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-slate-100 dark:hover:bg-slate-800/40 hover:translate-x-1 border-l-[3px] border-transparent font-medium'
@@ -77,20 +77,6 @@ export default function Sidebar({ activeTab, setActiveTab, mobileMenuOpen, setMo
                     <Icon className="w-4 h-4" />
                   </div>
                   <span className="font-heading tracking-wide text-xs">{item.label}</span>
-                </div>
-
-                {/* Clean Status Indicator Dot & Category Tag */}
-                <div className="flex items-center space-x-1.5">
-                  <span className={`text-[9px] font-mono px-1.5 py-0.5 rounded border transition-colors ${
-                    isCurrent
-                      ? 'bg-cyan-500/10 text-[#0891B2] dark:text-cyan-300 border-cyan-500/30 font-semibold'
-                      : 'bg-slate-100 dark:bg-slate-900/60 text-slate-600 dark:text-slate-400 border-slate-300 dark:border-slate-700/60 group-hover:border-slate-400'
-                  }`}>
-                    {item.tag}
-                  </span>
-                  <span className={`w-1.5 h-1.5 rounded-full ${
-                    isCurrent ? 'bg-[#0891B2] dark:bg-cyan-400 shadow-[0_0_6px_#0891B2]' : 'bg-slate-400 dark:bg-slate-600'
-                  }`} />
                 </div>
               </button>
             );
